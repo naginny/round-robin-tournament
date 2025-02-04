@@ -46,36 +46,31 @@
         </table>
 
 
-
-
-
-{#        {% if topTeams %}#}
-{#            <h2>🏆 Top 3 Teams</h2>#}
-{#            <ol>#}
-{#                {% for team in topTeams %}#}
-{#                    <li>{{ team.name }} ({{ team.winsCount }} Wins)</li>#}
-{#                {% endfor %}#}
-{#            </ol>#}
-{#        {% endif %}#}
-
         {% if rankedTeams is defined and rankedTeams|length > 0 %}
-            <h2>🏆 Rankings</h2>
-            <ol>
-                {% for group in rankedTeams %}
-                    <li>
-                        {% if group|length == 1 %}
-                            {{ group[0].name }} ({{ group[0].winsCount }} wins)
-                        {% else %}
-                            {# More than one team in the group: show all team names and mark as tied #}
-                            {% for team in group %}
-                                {{ team.name }} ({{ team.winsCount }} wins){% if not loop.last %}, {% endif %}
-                            {% endfor %}
-                            <span style="color: gray;">[Tied]</span>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ol>
+            <div class="ranking-container">
+                <h2>🏆 Rankings</h2>
+                <ol>
+                    {% for group in rankedTeams %}
+                        <li>
+                            {% if group is iterable %}
+                                {% if group|length == 1 %}
+                                    {{ group[0].name }} ({{ group[0].winsCount }} wins)
+                                {% else %}
+                                    {% for team in group %}
+                                        {{ team.name }} ({{ team.winsCount }} wins){% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                    <span style="color: gray;">[Tied]</span>
+                                {% endif %}
+                            {% else %}
+                                {# group is a single Team object #}
+                                {{ group.name }} ({{ group.winsCount }} wins)
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
         {% endif %}
+
 
 
     {% endif %}
