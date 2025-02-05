@@ -5,6 +5,19 @@ It allows users to simulate a tournament by generating teams, scheduling matches
 calculating rankings based on wins and head‑to‑head results. The interface is designed to be simple and 
 intuitive, providing immediate visual feedback through a dynamic grid and ranking list.
 
+### Behind the scenes 
+
+I'm still learning the ropes with Docker and Symfony, but I decided to use them for this small project,
+because (well, for practice in the first place) Docker eases setting up the project
+on different machines by providing a consistent development environment, and my capability to deal with Symfony 
+(or frameworks in general) clearly was this task requestor's interest.
+One of the project requirements was to implement UnitTests to cover the functionality. Here I've had a problem, I didn't manage to set up
+a testing database. Unfortunately, reusing main one, despite that it is not a good practice in general, also
+did not succeed. Here reveals an ugly truth about me: I am not very good at configuring things (:
+So, to satisfy the UnitTest coverage at least partially, I have used a stub for Entity Manager and
+completely avoided database interactions in test mode.
+
+
 ---
 
 ## Setting up and hands-on
@@ -82,24 +95,6 @@ Once the form is submitted, the application generates all tournament data and up
     - **Rank 2:** Team 3 (3 wins) and Team 4 (3 wins) [Tied]
     - **Rank 3:** Team 1 (2 wins)
 
-
-## User Workflow
-
-1. **Entering Tournament Data:**
-    - Enter the number of teams (between 2 and 12) in the input field.
-    - Click the submit button.
-2. **Tournament Simulation:**
-    - The application generates teams with unique names.
-    - Matches are scheduled in a round‑robin format.
-    - Winners are determined randomly.
-    - Overall win counts are calculated.
-    - A match grid is built and tie-breaker logic is applied to determine rankings.
-3. **Results Display:**
-    - The match grid visually presents the detailed results.
-    - The ranking list, below the grid, shows the teams’ standings.
-4. **Re-Running Simulations:**
-    - Change the team count and re-submit the form to generate a new simulation.
-    - The interface refreshes automatically with updated data.
 
 ---
 
