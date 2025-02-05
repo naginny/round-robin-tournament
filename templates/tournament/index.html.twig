@@ -15,7 +15,6 @@
     {% if teamCount %}
         <h2>Generated Tournament for {{ teamCount }} Teams</h2>
 
-
         <h3>Match Grid:</h3>
         <table border="1" cellpadding="5" cellspacing="0">
             <thead>
@@ -47,31 +46,26 @@
 
 
         {% if rankedTeams is defined and rankedTeams|length > 0 %}
-            <div class="ranking-container">
-                <h2>🏆 Rankings</h2>
-                <ol>
-                    {% for group in rankedTeams %}
-                        <li>
-                            {% if group is iterable %}
-                                {% if group|length == 1 %}
-                                    {{ group[0].name }} ({{ group[0].winsCount }} wins)
-                                {% else %}
-                                    {% for team in group %}
-                                        {{ team.name }} ({{ team.winsCount }} wins){% if not loop.last %}, {% endif %}
-                                    {% endfor %}
-                                    <span style="color: gray;">[Tied]</span>
-                                {% endif %}
+            <h2>🏆 Rankings</h2>
+            <ol>
+                {% for group in rankedTeams %}
+                    <li>
+                        {% if group is iterable %}
+                            {% if group|length == 1 %}
+                                {{ group[0].name }} ({{ group[0].winsCount }} wins)
                             {% else %}
-                                {# group is a single Team object #}
-                                {{ group.name }} ({{ group.winsCount }} wins)
+                                {% for team in group %}
+                                    {{ team.name }} ({{ team.winsCount }} wins){% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                                <span style="color: gray;">[Tied]</span>
                             {% endif %}
-                        </li>
-                    {% endfor %}
-                </ol>
-            </div>
+                        {% else %}
+                            {{ group.name }} ({{ group.winsCount }} wins)
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ol>
         {% endif %}
-
-
 
     {% endif %}
 {% endblock %}

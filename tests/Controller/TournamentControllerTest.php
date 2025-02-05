@@ -12,5 +12,7 @@ final class TournamentControllerTest extends WebTestCase
         $client->request('GET', '/tournament');
 
         self::assertResponseIsSuccessful();
+        self::assertSelectorExists('form');
     }
+
 }

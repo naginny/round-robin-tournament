@@ -19,12 +19,12 @@ class TournamentService
      */
     private array $tournamentMatches = [];
 
-    private array $grid = [];
-
     /**
      * @var TournamentMatch[]
      */
     private array $matchMapIndexed = [];
+
+    private array $grid = [];
 
     private array $rankedTeams = [];
 
@@ -33,17 +33,44 @@ class TournamentService
         $this->entityManager = $entityManager;
     }
 
-    public function getTeams()
+    /**
+     * For testing purposes only!
+     * @teams Team[]
+     */
+    public function setTeams(array $teams): void
+    {
+        if ($_ENV['APP_ENV'] === 'test')
+        {
+            $this->teams = $teams;
+        }
+    }
+
+    /**
+     * @return Team[]
+     */
+    public function getTeams(): array
     {
         return $this->teams;
     }
 
-    public function getTournamentGrid()
+    /**
+     * For testing purposes only!
+     * @tournamentMatches TournamentMatch[]
+     */
+    public function setTournamentMatches(array $tournamentMatches): void
+    {
+        if ($_ENV['APP_ENV'] === 'test')
+        {
+            $this->tournamentMatches = $tournamentMatches;
+        }
+    }
+
+    public function getTournamentGrid(): array
     {
         return $this->grid;
     }
 
-    public function getRankedTeams()
+    public function getRankedTeams(): array
     {
         return $this->rankedTeams;
     }
@@ -64,6 +91,7 @@ class TournamentService
             $teams[] = $team;
         }
         $this->entityManager->flush();
+
         $this->teams = $teams;
     }
 
@@ -91,7 +119,6 @@ class TournamentService
 
     public function generateGrid(): void
     {
-        $this->matchMapIndexed = [];
         foreach ($this->tournamentMatches as $match) {
             $idA = $match->getTeamA()->getId();
             $idB = $match->getTeamB()->getId();
@@ -164,7 +191,7 @@ class TournamentService
             }
             if (count($group) === 1) {
                 // Only one team with this wins count: rank is clear.
-                $this->rankedTeams[] = $group;
+                $this->rankedTeams[] = $group[0];
             } else {
                 // More than one team: perform head-to-head comparisons and add to resulting array
                 $this->evaluateHeadToHead($group);
