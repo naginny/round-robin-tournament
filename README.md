@@ -5,6 +5,7 @@ It allows users to simulate a tournament by generating teams, scheduling matches
 calculating rankings based on wins and head‑to‑head results. The interface is designed to be simple and 
 intuitive, providing immediate visual feedback through a dynamic grid and ranking list.
 
+---
 
 ## Setting up and hands-on
 
@@ -14,6 +15,8 @@ intuitive, providing immediate visual feedback through a dynamic grid and rankin
 4. Open `https://localhost/tournament` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
 5. Enter desired team count and enjoy results!
 6. To launch UnitTests, run `php bin/phpunit`
+
+---
 
 ## User Interface
 
@@ -43,8 +46,6 @@ Once the form is submitted, the application generates all tournament data and up
 
 1. **Match Grid**
 2. **Rankings Section**
-
----
 
 ## Tournament Data Display
 
@@ -81,7 +82,6 @@ Once the form is submitted, the application generates all tournament data and up
     - **Rank 2:** Team 3 (3 wins) and Team 4 (3 wins) [Tied]
     - **Rank 3:** Team 1 (2 wins)
 
----
 
 ## User Workflow
 
@@ -103,7 +103,7 @@ Once the form is submitted, the application generates all tournament data and up
 
 ---
 
-# Technical Documentation
+# Technical Details
 
 ## Code Structure
 
@@ -144,9 +144,6 @@ The application uses a MySQL database with Doctrine ORM for data persistence. Th
 **Note:**  
 For testing purposes, database operations are stubbed, so no real database calls occur during unit tests.
 
-## Data Purge Mechanism
-
-Before each new tournament is generated, the application ensures that all previous data is removed. This is handled by the `purgePreviousTournamentData()` method in the `TournamentService`, which executes queries to delete all records from both the `team` and `tournament_match` tables. This guarantees that each simulation starts with a clean slate.
 
 ## Docker & Environment
 
@@ -215,6 +212,7 @@ The core logic of the Round‑Robin Tournament Simulator is designed to be strai
     - If one team beat another in their direct match, that team is ranked higher.
     - If the head‑to‑head results form a cycle or remain unresolved, the tied teams are grouped together in the final ranking.
 
+---
 
 ## Credits
 
